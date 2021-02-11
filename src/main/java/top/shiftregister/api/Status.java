@@ -2,8 +2,12 @@ package top.shiftregister.api;
 
 public class Status {
 
-    private final int status;
-    private final String information;
+    int status;
+    String information;
+
+    public Status() {
+
+    }
 
     public Status(int code, String info) {
         status = code;
