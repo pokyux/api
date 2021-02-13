@@ -47,11 +47,11 @@ public class Mail {
 
     @GetMapping("/mail/send-token")
     public Status sendMail(@RequestParam(value = "mail", defaultValue = "") String mailAddress, HttpServletRequest request) {
-        if (!checkAndFreshRequestHistory(request.getRemoteAddr())) return new Status(2, "发送过于频繁. 在" + spacingInterval / 1000 + "秒内你只能发送一次验证码.");
         if (mailAddress.equals("")) return new Status(1, "缺少参数");
         Long time = history.get(mailAddress);
-        if (time != null && (new Date().getTime() - time) < spacingInterval) return new Status(2, "发送过于频繁. 在" + spacingInterval / 1000 + "秒内你只能发送一次验证码.");
+        if (time != null && (new Date().getTime() - time) < spacingInterval) return new Status(2, "发送过于频繁. 在" + spacingInterval / 1000 + "秒内你只能提交一次信息.");
         String token = "" + Math.abs(new Random().nextInt() % 10000000);
+        if (!checkAndFreshRequestHistory(request.getRemoteAddr())) return new Status(2, "发送过于频繁. 在" + spacingInterval / 1000 + "秒内你只能提交一次信息.");
         if (!sendEmail(mailAddress, "api", "验证码", "你的验证码为: " + token + ". 如果你没有发送类似请求, 请忽略.")) return new Status(3, "邮箱有误, 或者邮件系统出错.");
         tokenList.put(mailAddress, token);
         history.put(mailAddress, new Date().getTime());

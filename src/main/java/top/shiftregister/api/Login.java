@@ -23,11 +23,9 @@ public class Login {
     public Status sendToken(@RequestParam(value = "mail", defaultValue = "") String email) throws JsonProcessingException {
         if (email.equals("")) return new Status(1, "缺少参数");
         String ret = HttpRequest.get(serverAddr + "/mail/send-token?mail=" + email);
-        if (ret.equals("")) return new Status(2, "验证服务器出错");
+        if (ret.equals("")) return new Status(2, "验证服务器不在线");
         System.out.println(ret);
-        Status status = mapper.readValue(ret, Status.class);
-        if (status.getStatus() != 0) return new Status(2, "验证服务器出错");
-        return new Status(0, "验证码已发送");
+        return mapper.readValue(ret, Status.class);
     }
 
     @GetMapping("/login/check-token")
