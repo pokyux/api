@@ -4,12 +4,16 @@ import (
 	beego "github.com/beego/beego/v2/server/web"
 )
 
-type MainController struct {
+type APIController struct {
 	beego.Controller
 }
 
-func (c *MainController) Get() {
-	c.Data["Website"] = "beego.me"
-	c.Data["Email"] = "astaxie@gmail.com"
-	c.TplName = "index.tpl"
+type Response struct {
+	Code int
+	Msg string
+}
+
+func (c *APIController) Hello() {
+	c.Data["json"] = Response{Msg: "Welcome to Kininaru API platform"}
+	_ = c.ServeJSON()
 }
