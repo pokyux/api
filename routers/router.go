@@ -7,4 +7,5 @@ import (
 
 func init() {
     beego.Router("/", &controllers.APIController{}, "GET:Hello")
+    beego.Router("/markdown-to-html", &controllers.APIController{}, "POST:MarkdownToHTML")
 }

@@ -13,6 +13,15 @@ type Response struct {
 	Msg string
 }
 
+func (c *APIController) ResponseSuccess(content ...string) {
+	msg := ""
+	if len(content) != 0 {
+		msg = content[0]
+	}
+	c.Data["json"] = Response{Code: 0, Msg: msg}
+	_ = c.ServeJSON()
+}
+
 func (c *APIController) Hello() {
 	c.Data["json"] = Response{Msg: "Welcome to Kininaru API platform"}
 	_ = c.ServeJSON()
