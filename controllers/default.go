@@ -9,8 +9,8 @@ type APIController struct {
 }
 
 type Response struct {
-	Code int
-	Msg string
+	Code int `json:"code"`
+	Msg string `json:"msg"`
 }
 
 func (c *APIController) ResponseSuccess(content ...string) {
