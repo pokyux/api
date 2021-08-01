@@ -2,10 +2,13 @@ package main
 
 import (
 	"api/routers"
+	"api/services"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
+	services.Init()
+
 	gin.SetMode(gin.ReleaseMode)
 	engine := gin.Default()
 
