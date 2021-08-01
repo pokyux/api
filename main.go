@@ -2,12 +2,17 @@ package main
 
 import (
 	"api/routers"
-	_ "api/routers"
-	beego "github.com/beego/beego/v2/server/web"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	beego.InsertFilter("/*", beego.BeforeRouter, routers.Cors)
-	beego.Run()
-}
+	gin.SetMode(gin.ReleaseMode)
+	engine := gin.Default()
 
+	routers.InitRouter(engine)
+
+	err := engine.Run("0.0.0.0:23333")
+	if err != nil {
+		panic(err)
+	}
+}

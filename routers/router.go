@@ -2,10 +2,9 @@ package routers
 
 import (
 	"api/controllers"
-	beego "github.com/beego/beego/v2/server/web"
+	"github.com/gin-gonic/gin"
 )
 
-func init() {
-    beego.Router("/", &controllers.APIController{}, "GET:Hello")
-    beego.Router("/markdown-to-html", &controllers.APIController{}, "POST:MarkdownToHTML")
+func InitRouter(engine *gin.Engine) {
+	engine.GET("/", controllers.Index)
 }
