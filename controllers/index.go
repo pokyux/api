@@ -10,5 +10,13 @@ func Index(ctx *gin.Context) {
 }
 
 func Status(ctx *gin.Context) {
-	ctx.JSON(200, getJsonResponse(0, services.GetRunTimeString()))
+	ctx.JSON(200, getJsonResponse(0, services.GetRunTimeString(), services.GetRunTimeSecond()))
+}
+
+func Private(ctx *gin.Context) {
+	if !auth(ctx) {
+		return
+	}
+
+	ctx.String(200, "Welcome")
 }

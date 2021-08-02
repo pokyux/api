@@ -25,3 +25,7 @@ func GetRunTimeString() string {
 
 	return fmt.Sprintf("Server has been running for %dd %dh %dm %ds", d, h, m, s)
 }
+
+func GetRunTimeSecond() int64 {
+	return time.Now().Unix() - startTimestamp
+}

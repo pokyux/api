@@ -1,5 +1,13 @@
 package controllers
 
+import (
+	"github.com/gin-gonic/gin"
+)
+
+func Init(key string) {
+	privateKey = key
+}
+
 type Response struct {
 	Code int         `json:"code"`
 	Msg  string      `json:"msg"`
@@ -24,4 +32,15 @@ func getJsonResponse(code int, data ...interface{}) Response {
 	}
 
 	return resp
+}
+
+var privateKey string
+
+func auth(ctx *gin.Context) bool {
+	authorization := ctx.Request.Header.Get("Authorization")
+	if len(authorization) == 0 || authorization != privateKey {
+		ctx.String(403, "Access denied")
+		return false
+	}
+	return true
 }
