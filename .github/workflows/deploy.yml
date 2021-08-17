@@ -20,5 +20,5 @@ jobs:
           NEW_SECRET: ${{ secrets.NEW_SECRET }}
         run: |
           go build
-          nohup ./api "%OLD_SECRET%" "%NEW_SECRET%" &
+          screen ./api "%OLD_SECRET%" "%NEW_SECRET%"
           echo finished
