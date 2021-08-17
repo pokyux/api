@@ -21,3 +21,4 @@ jobs:
         run: |
           go build
           nohup ./api "%OLD_SECRET%" "%NEW_SECRET%" &
+          echo finished
