@@ -16,8 +16,8 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: build and run
         env:
-          OLD_SECRET: ${{ secrets.OldSecret }}
-          NEW_SECRET: ${{ secrets.NewSecret }}
+          OLD_SECRET: ${{ secrets.OLD_SECRET }}
+          NEW_SECRET: ${{ secrets.NEW_SECRET }}
         run: |
           go build
           nohup ./api "%OLD_SECRET%" "%NEW_SECRET%" &
