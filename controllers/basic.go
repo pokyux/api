@@ -1,11 +1,29 @@
 package controllers
 
 import (
+	"net/http"
+
+	"api/services"
+	"api/throw"
 	"github.com/gin-gonic/gin"
 )
 
-func Init(key string) {
-	privateKey = key
+type ControllerConfig struct {
+	OldSecret string
+	NewSecret string
+}
+
+var config ControllerConfig
+
+func Init(conf ControllerConfig) {
+	if services.IsEmpty(conf.OldSecret, conf.NewSecret) {
+		panic(throw.MissingParam())
+	}
+
+	// end the prev api progress
+	_, _ = http.Get("http://localhost:23333/stop")
+
+	config = conf
 }
 
 type Response struct {
@@ -34,11 +52,9 @@ func getJsonResponse(code int, data ...interface{}) Response {
 	return resp
 }
 
-var privateKey string
-
 func auth(ctx *gin.Context) bool {
 	authorization := ctx.Request.Header.Get("Authorization")
-	if len(authorization) == 0 || authorization != privateKey {
+	if len(authorization) == 0 || authorization != config.NewSecret {
 		ctx.String(403, "Access denied")
 		return false
 	}

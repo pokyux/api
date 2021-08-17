@@ -10,12 +10,15 @@ import (
 )
 
 func main() {
-	if len(os.Args) < 2 {
+	if len(os.Args) < 3 {
 		panic("No enough args")
 	}
 
 	services.Init()
-	controllers.Init(os.Args[1])
+	controllers.Init(controllers.ControllerConfig{
+		OldSecret: os.Args[1],
+		NewSecret: os.Args[2],
+	})
 
 	gin.SetMode(gin.ReleaseMode)
 	engine := gin.Default()
